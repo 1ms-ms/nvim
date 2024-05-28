@@ -2,6 +2,14 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
+      -- TERRAFORM LSP
+      require("lspconfig").terraformls.setup({})
+      vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+        pattern = { "*.tf", "*.tfvars" },
+        callback = function()
+          vim.lsp.buf.format()
+        end,
+      })
       -- GOLANG LSP
       require("lspconfig").gopls.setup({})
       -- GOIMPORT ON SAVE
@@ -50,5 +58,14 @@ return {
   {
     "folke/lsp-colors.nvim",
     config = true,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "hcl",
+        "terraform",
+      },
+    },
   },
 }
