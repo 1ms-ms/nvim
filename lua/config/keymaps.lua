@@ -36,3 +36,19 @@ end)
 vim.keymap.set("n", "gR", function()
   require("trouble").toggle("lsp_references")
 end)
+
+local opts = { noremap = true, silent = true }
+vim.keymap.set("n", "<Tab>", ">>", opts)
+vim.keymap.set("n", "<S-Tab>", "<<", opts)
+vim.keymap.set("v", "<Tab>", ">gv", opts)
+vim.keymap.set("v", "<S-Tab>", "<gv", opts)
+
+-- NEW FiILE
+vim.api.nvim_set_keymap("n", "<C-n>", ":lua CreateNewFile()<CR>", { noremap = true, silent = true })
+
+function CreateNewFile()
+  local filename = vim.fn.input("Enter new file name: ")
+  if filename ~= "" then
+    vim.cmd("e " .. filename)
+  end
+end

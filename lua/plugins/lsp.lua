@@ -3,9 +3,9 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       -- TERRAFORM LSP
-      require("lspconfig").terraformls.setup({})
+      require("lspconfig").terraformls.setup({ filetypes = { "terraform", "hcl" } })
       vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-        pattern = { "*.tf", "*.tfvars" },
+        pattern = { "*.tf", "*.tfvars", "*.hcl" },
         callback = function()
           vim.lsp.buf.format()
         end,
@@ -59,13 +59,13 @@ return {
     "folke/lsp-colors.nvim",
     config = true,
   },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "hcl",
-        "terraform",
-      },
-    },
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   opts = {
+  --     ensure_installed = {
+  --       "hcl",
+  --       "terraform",
+  --     },
+  --   },
+  -- },
 }
