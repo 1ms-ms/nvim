@@ -3,7 +3,14 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       -- TERRAFORM LSP
-      require("lspconfig").terraformls.setup({ filetypes = { "terraform", "hcl" } })
+      require("lspconfig").terraformls.setup({
+        init_options = {
+          terraform = {
+            path = "/opt/homebrew/bin/terraform",
+          },
+        },
+        filetypes = { "terraform", "hcl", "terraform-vars" },
+      })
       vim.api.nvim_create_autocmd({ "BufWritePre" }, {
         pattern = { "*.tf", "*.tfvars", "*.hcl" },
         callback = function()
@@ -34,12 +41,14 @@ return {
     end,
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
+    version = "1.11.0",
     dependencies = "nvim-lspconfig",
     config = true,
   },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
+    version = "1.32.0",
     dependencies = { "mason.nvim" },
     config = function()
       local mason_lspconfig = require("mason-lspconfig")
